@@ -1,21 +1,27 @@
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "../ThemeContext";
+import { FavoritesCard } from "./FavoritesCard";
+import { useSelector } from "react-redux";
+function Party() {
+	const { theme } = useContext(ThemeContext);
+	const favorites = useSelector((state) => state.pokemon);
 
-function Party(){
+	useEffect(() => {
+		document.body.style.backgroundColor = theme.background;
+	}, [theme]);
 
-    const {theme} = useContext(ThemeContext);
+	if (favorites.length === 0) {
+		return <p style={{ color: theme.foreground }}>Favorites list is empty</p>;
+	}
 
-    useEffect(() => {
-        document.body.style.backgroundColor = theme.background;
-    }, [theme]);
-
-    return(
-        <div style={{color:theme.foreground}}>
-            <h2>Party Page</h2>
-            <p>Welcome to the store</p>
-        </div>
-        
-    )
+	return favorites.map((entry) => {
+		return (
+			<FavoritesCard
+				key={entry.value}
+				url={"https://pokeapi.co/api/v2/pokemon-species/" + entry.value}
+			/>
+		);
+	});
 }
 
 export default Party;

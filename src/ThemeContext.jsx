@@ -53,7 +53,6 @@ export const ThemeProvider = (props) => {
 		//if previous theme was dark, set to light. else, set to dark
 	};
 
-
 	return (
 		<ThemeContext.Provider value={{ theme, changeTheme }}>
 			{props.children}
